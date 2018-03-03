@@ -11,40 +11,37 @@
 #include "liveMedia.hh"
 #include "BasicUsageEnvironment.hh"
 #include "rtsp_common.h"
-#include <vector>
 
-typedef void (*Frame_Callback)(char* pFrame, int size);
+typedef void (*Frame_Callback)(char* pFrame, int size, const clientId& clientId);
 
 class RtspDecodeSink : public MediaSink {
-public:
-  static RtspDecodeSink* createNew(UsageEnvironment& env,
-			      MediaSubsession& subsession, // identifies the kind of data that's being received
-			      char* unit, Frame_Callback callBack, char const* streamId = NULL); // identifies the stream itself (optional)
+    public:
+        static RtspDecodeSink* createNew(UsageEnvironment& env,
+                MediaSubsession& subsession, // identifies the kind of data that's being received
+                Frame_Callback callBack, const clientId& clientId, char const* streamId = NULL); // identifies the stream itself (optional)
 
-  void GetNALU(char** data);
-private:
-  RtspDecodeSink(UsageEnvironment& env, MediaSubsession& subsession, char const* streamId, char* unit, Frame_Callback callBack);
-    // called only by "createNew()"
-  virtual ~RtspDecodeSink();
+    private:
+        RtspDecodeSink(UsageEnvironment& env, MediaSubsession& subsession, char const* streamId, Frame_Callback callBack, const clientId& clientId);
+        // called only by "createNew()"
+        virtual ~RtspDecodeSink();
 
-  static void afterGettingFrame(void* clientData, unsigned frameSize,
-                                unsigned numTruncatedBytes,
-				struct timeval presentationTime,
-                                unsigned durationInMicroseconds);
-  void afterGettingFrame(unsigned frameSize, unsigned numTruncatedBytes,
-			 struct timeval presentationTime, unsigned durationInMicroseconds);
+        static void afterGettingFrame(void* clientData, unsigned frameSize,
+                unsigned numTruncatedBytes,
+                struct timeval presentationTime,
+                unsigned durationInMicroseconds);
+        void afterGettingFrame(unsigned frameSize, unsigned numTruncatedBytes,
+                struct timeval presentationTime, unsigned durationInMicroseconds);
 
-private:
-  // redefined virtual functions:
-  virtual Boolean continuePlaying();
-  //std::vector<char*> mBuffer;
-  char* mpUnit;
-  Frame_Callback mOnFrameCallback;
+    private:
+        // redefined virtual functions:
+        virtual Boolean continuePlaying();
+        Frame_Callback mOnFrameCallback;
 
-private:
-  u_int8_t* fReceiveBuffer;
-  MediaSubsession& fSubsession;
-  char* fStreamId;
+    private:
+        u_int8_t* fReceiveBuffer;
+        MediaSubsession& fSubsession;
+        char* fStreamId;
+        clientId mClientId;
 };
 
 

@@ -10,10 +10,12 @@
 
 
 #include <android/log.h>
+#include <string>
 
 /*
  * LOG in Android
  */
+typedef std::string clientId;
 
 #define LOG_TAG "native"
 #define  LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG, LOG_TAG, __VA_ARGS__)
