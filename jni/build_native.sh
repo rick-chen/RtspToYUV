@@ -5,7 +5,9 @@
 #
 # Distributed under terms of the MIT license.
 #
-
+pushd custom
+bash generate_swig.sh
+popd
 
 ~/Downloads/android-ndk-r12b/ndk-build
 cp /home/kychen/Documents/live555/libs/arm64-v8a/liblive555.so /home/kychen/RSTPtoYUVDemo/app/src/main/jniLibs/arm64-v8a/

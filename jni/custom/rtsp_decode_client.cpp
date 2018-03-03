@@ -157,7 +157,7 @@ void continueAfterSETUP(RTSPClient* rtspClient, int resultCode, char* resultStri
 
         if (resultCode != 0) {
             //env << *rtspClient << "Failed to set up the \"" << *scs.subsession << "\" subsession: " << resultString << "\n";
-            LOGD("failed to set up %d, result is %s", *scs.subsession, resultString);
+            LOGD("failed to set up , result is %s", resultString);
             break;
         }
 
@@ -178,7 +178,7 @@ void continueAfterSETUP(RTSPClient* rtspClient, int resultCode, char* resultStri
         scs.subsession->sink = (MediaSink*) gClientMaps[gClientId]->mpSink;
         // perhaps use your own custom "MediaSink" subclass instead
         if (scs.subsession->sink == NULL) {
-            LOGD("Failed to create data sink for %d subssesion, result msg : %s", *scs.subsession, env.getResultMsg());
+            LOGD("Failed to create data sink for subssesion, result msg : %s", env.getResultMsg());
             break;
         }
 

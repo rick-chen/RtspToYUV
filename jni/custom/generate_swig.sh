@@ -8,3 +8,4 @@
 
 
 swig -c++ -java -package com.example.zgzhu.rstptoyuvdemo -outdir /home/kychen/RSTPtoYUVDemo/app/src/main/java/com/example/zgzhu/rstptoyuvdemo -o rtsp_decode_client_swig.cpp rtsp_decode_client.i
+swig -c++ -java -package com.example.zgzhu.rstptoyuvdemo -outdir ./ -o rtsp_decode_client_swig.cpp rtsp_decode_client.i
